@@ -1,0 +1,3328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>How We Became Us ♡</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Permanent+Marker&family=Special+Elite&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+
+background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,.18), transparent 25%),
+    radial-gradient(circle at 80% 70%, rgba(120,70,70,.08), transparent 25%),
+    #b98f8f;
+
+    color: #40372d;
+    font-family: "Patrick Hand", cursive;
+}
+
+/* =========================
+   HAND-DRAWN TEXTURE
+========================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(80,50,30,.025) 0px,
+            rgba(80,50,30,.025) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+
+    opacity: .8;
+}
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress-wrap {
+    position: fixed;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: min(280px, 55vw);
+    height: 9px;
+
+    background: #526b46;
+    border: 3px solid #302f27;
+
+    z-index: 1001;
+
+    box-shadow: 3px 4px 0 rgba(40,35,25,.25);
+
+    transform-origin: center;
+}
+
+.progress-bar {
+    width: 9%;
+    height: 100%;
+
+    background: #e8b95e;
+
+    transition: width .6s ease;
+}
+
+/* =========================
+   PAGE
+========================= */
+
+.page {
+    min-height: 100vh;
+
+    padding: 65px 18px 50px;
+
+    display: none;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.page.active {
+    display: flex;
+
+    animation: pageIn .65s ease;
+}
+
+@keyframes pageIn {
+    from {
+        opacity: 0;
+        transform: scale(.96) rotate(-1deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
+}
+
+/* =========================
+   OPEN SCRAPBOOK
+========================= */
+
+.book {
+    width: min(1100px, 100%);
+    min-height: 700px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    position: relative;
+
+    filter:
+        drop-shadow(0 25px 25px rgba(35,45,30,.25));
+}
+
+/* =========================
+   PAGES
+========================= */
+
+.paper {
+    position: relative;
+
+    min-height: 700px;
+
+    padding: clamp(38px, 5vw, 70px);
+
+    background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.3), transparent 30%),
+        radial-gradient(circle at 80% 70%, rgba(100,70,40,.08), transparent 35%),
+        repeating-linear-gradient(
+            0deg,
+            rgba(100,70,40,.025) 0px,
+            rgba(100,70,40,.025) 2px,
+            transparent 2px,
+            transparent 6px
+        ),
+        #d8c7a5;
+
+    border: 3px solid #302c25;
+
+    overflow: hidden;
+}
+
+.paper.left {
+    border-right: 0;
+
+    border-radius:
+        18px 3px 3px 12px;
+
+    transform:
+        perspective(1000px)
+        rotateY(2deg);
+}
+
+.paper.right {
+    border-left: 0;
+
+    border-radius:
+        3px 18px 12px 3px;
+
+    transform:
+        perspective(1000px)
+        rotateY(-2deg);
+}
+
+/* paper edge */
+
+.paper::after {
+    content: "";
+
+    position: absolute;
+    inset: 10px;
+
+    border:
+        2px dashed
+        rgba(72,58,39,.25);
+
+    pointer-events: none;
+
+    border-radius: 8px;
+}
+
+/* center shadow */
+
+.book::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: 50%;
+
+    width: 35px;
+
+    transform: translateX(-50%);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(40,30,20,.22),
+            rgba(255,255,255,.2),
+            rgba(40,30,20,.2),
+            transparent
+        );
+
+    z-index: 20;
+
+    pointer-events: none;
+}
+
+/* =========================
+   BINDER RINGS
+========================= */
+
+.rings {
+    position: absolute;
+
+    top: 25px;
+    bottom: 25px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 40px;
+
+    z-index: 50;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    pointer-events: none;
+}
+
+.ring {
+    width: 32px;
+    height: 48px;
+
+    border: 5px solid #ded8c9;
+
+    border-right-color: #69665e;
+    border-left-color: #8d8980;
+
+    border-radius: 50%;
+
+    background: transparent;
+
+    box-shadow:
+        2px 2px 2px rgba(0,0,0,.4),
+        inset 2px 0 2px rgba(255,255,255,.7);
+}
+
+/* =========================
+   TAPE
+========================= */
+
+.tape {
+    position: absolute;
+
+    width: 105px;
+    height: 30px;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            rgba(230,184,86,.85) 0px,
+            rgba(230,184,86,.85) 8px,
+            rgba(210,160,65,.8) 8px,
+            rgba(210,160,65,.8) 10px
+        );
+
+    border: 2px solid rgba(70,50,25,.2);
+
+    z-index: 30;
+
+    box-shadow: 2px 3px 3px rgba(50,40,20,.15);
+}
+
+.tape.one {
+    top: 30px;
+    right: 55px;
+    transform: rotate(8deg);
+}
+
+.tape.two {
+    top: 35px;
+    left: 55px;
+    transform: rotate(-7deg);
+}
+
+/* =========================
+   TYPOGRAPHY
+========================= */
+
+.label {
+    font-family: "Special Elite", serif;
+
+    font-size: 11px;
+    letter-spacing: 3px;
+
+    color: #65543d;
+
+    text-transform: uppercase;
+
+    margin-bottom: 15px;
+
+    transform: rotate(-1deg);
+}
+
+h1,
+h2 {
+    font-family: "Permanent Marker", cursive;
+
+    color: #423629;
+
+    text-shadow:
+        1px 1px 0 rgba(255,255,255,.25);
+
+    position: relative;
+    z-index: 5;
+}
+
+h1 {
+    font-size: clamp(45px, 7vw, 82px);
+    line-height: .95;
+}
+
+h2 {
+    font-size: clamp(38px, 6vw, 65px);
+    line-height: 1;
+}
+
+.subtitle {
+    margin-top: 25px;
+
+    font-size: 23px;
+    line-height: 1.45;
+
+    color: #5e503d;
+
+    max-width: 650px;
+}
+
+.date {
+    margin-top: 12px;
+
+    font-family: "Special Elite", serif;
+
+    font-size: 11px;
+    letter-spacing: 2px;
+
+    color: #806e51;
+}
+
+/* =========================
+   STORY
+========================= */
+
+.story {
+    margin-top: 25px;
+
+    font-size: 23px;
+    line-height: 1.55;
+
+    color: #564936;
+
+    position: relative;
+    z-index: 5;
+}
+
+.story strong {
+    color: #8c4b3e;
+
+    font-family: "Permanent Marker", cursive;
+
+    font-weight: normal;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.next {
+    margin-top: 35px;
+
+    padding: 13px 22px;
+
+    background: #e3b654;
+
+    border: 3px solid #3e3528;
+
+    color: #3c3125;
+
+    font-family: "Permanent Marker", cursive;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    position: relative;
+    z-index: 100;
+
+    box-shadow:
+        4px 5px 0 #4b4031;
+
+    transform: rotate(-1deg);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.next:hover {
+    transform:
+        translateY(-4px)
+        rotate(1deg);
+
+    box-shadow:
+        6px 8px 0 #4b4031;
+}
+
+.next:active {
+    transform:
+        translateY(2px)
+        rotate(0);
+
+    box-shadow:
+        2px 2px 0 #4b4031;
+}
+
+/* =========================
+   OPENING
+========================= */
+
+.opening {
+    text-align: center;
+
+    max-width: 700px;
+
+    margin: auto;
+
+    position: relative;
+    z-index: 5;
+}
+
+.opening-heart {
+    font-size: 60px;
+
+    color: #9e493f;
+
+    margin: 15px 0;
+
+    animation: heartbeat 1.8s infinite;
+}
+
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1) rotate(-3deg);
+    }
+
+    50% {
+        transform: scale(1.15) rotate(3deg);
+    }
+}
+
+.opening-note {
+    display: inline-block;
+
+    margin-top: 25px;
+
+    padding: 12px 20px;
+
+    background: #e7cf85;
+
+    border: 2px solid #4b4030;
+
+    font-size: 25px;
+
+    box-shadow:
+        4px 5px 0 rgba(65,50,30,.25);
+
+    transform: rotate(-3deg);
+}
+
+/* =========================
+   QUOTE
+========================= */
+
+.quote {
+    margin: 30px 0;
+
+    padding: 18px 22px;
+
+    background: rgba(236,216,160,.75);
+
+    border:
+        2px dashed
+        #7d6847;
+
+    font-size: 26px;
+
+    line-height: 1.35;
+
+    color: #625039;
+
+    transform: rotate(-1deg);
+
+    box-shadow:
+        3px 4px 0 rgba(60,45,25,.12);
+
+    position: relative;
+    z-index: 5;
+}
+
+.quote::before {
+    content: "“";
+
+    position: absolute;
+
+    top: -22px;
+    left: 5px;
+
+    font-family: Georgia, serif;
+    font-size: 55px;
+
+    color: #9b8055;
+}
+
+.hand {
+    font-family: "Patrick Hand", cursive;
+}
+
+/* =========================
+   NOTES
+========================= */
+
+.notes {
+    margin-top: 28px;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    position: relative;
+    z-index: 10;
+}
+
+.note {
+    display: inline-block;
+
+    padding: 14px 18px;
+
+    min-width: 130px;
+
+    background: #e8cf7b;
+
+    border:
+        2px solid
+        rgba(70,55,30,.35);
+
+    color: #51432f;
+
+    font-size: 22px;
+
+    line-height: 1.15;
+
+    text-align: center;
+
+    box-shadow:
+        4px 5px 0 rgba(60,45,25,.17);
+
+    transform: rotate(-3deg);
+
+    transition: .25s ease;
+}
+
+.note:hover {
+    transform:
+        translateY(-6px)
+        rotate(1deg);
+}
+
+.note:nth-child(2) {
+    background: #dca99b;
+    transform: rotate(3deg);
+}
+
+.note:nth-child(3) {
+    background: #a9c994;
+    transform: rotate(-2deg);
+}
+
+.note:nth-child(4) {
+    background: #9db7cf;
+    transform: rotate(2deg);
+}
+
+.note:nth-child(5) {
+    background: #d5a982;
+    transform: rotate(-1deg);
+}
+
+.note:nth-child(6) {
+    background: #bca7c9;
+    transform: rotate(2deg);
+}
+
+/* =========================
+   PHOTOS
+========================= */
+
+.june1-photo {
+    width: min(340px, 90%);
+
+    margin: 35px auto;
+
+    background: #f3ead4;
+
+    padding: 10px 10px 25px;
+
+    border: 3px solid #3e3528;
+
+    box-shadow:
+        7px 9px 0 rgba(55,42,25,.22);
+
+    transform: rotate(2deg);
+
+    position: relative;
+    z-index: 10;
+}
+
+.june1-photo img {
+    width: 100%;
+
+    display: block;
+
+    aspect-ratio: 4 / 5;
+
+    object-fit: cover;
+
+    border: 2px solid #493e2d;
+}
+
+.photo-caption {
+    margin-top: 12px;
+
+    text-align: center;
+
+    font-size: 23px;
+
+    color: #594936;
+}
+
+.dm-screenshot {
+    width: min(620px, 95%);
+
+    margin: 35px auto;
+
+    background: #f3ead4;
+
+    padding: 10px;
+
+    border: 3px solid #3e3528;
+
+    box-shadow:
+        7px 9px 0 rgba(55,42,25,.22);
+
+    transform: rotate(-1deg);
+
+    position: relative;
+    z-index: 10;
+}
+
+.dm-screenshot img {
+    width: 100%;
+
+    display: block;
+
+    max-height: 600px;
+
+    object-fit: contain;
+
+    border: 2px solid #493e2d;
+}
+
+/* =========================
+   BIG MOMENT
+========================= */
+
+.big-moment {
+    text-align: center;
+
+    margin: 35px 0;
+
+    position: relative;
+    z-index: 5;
+}
+
+.big-time {
+    font-family: "Permanent Marker", cursive;
+
+    font-size: clamp(45px, 8vw, 80px);
+
+    color: #97483e;
+
+    transform: rotate(-2deg);
+}
+
+.official {
+    font-size: 31px;
+
+    color: #604832;
+
+    margin-top: 12px;
+}
+
+/* =========================
+   MEDIA GALLERY
+========================= */
+
+.media-gallery {
+    margin-top: 35px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 45px 30px;
+
+    position: relative;
+    z-index: 10;
+}
+
+.memory-card {
+    width: 100%;
+
+    background: #f1e8d3;
+
+    padding: 10px 10px 18px;
+
+    border: 3px solid #403629;
+
+    box-shadow:
+        6px 8px 0 rgba(55,42,25,.2);
+
+    transition: .3s ease;
+}
+
+.memory-card:nth-child(1) {
+    transform: rotate(-3deg);
+}
+
+.memory-card:nth-child(2) {
+    transform: translateY(25px) rotate(2deg);
+}
+
+.memory-card:nth-child(3) {
+    transform: translateY(5px) rotate(1.5deg);
+}
+
+.memory-card:nth-child(4) {
+    transform: translateY(30px) rotate(-2deg);
+}
+
+.memory-card:nth-child(5) {
+    grid-column: 1 / -1;
+
+    width: min(48%, 400px);
+
+    justify-self: center;
+
+    transform: rotate(2deg);
+}
+
+.memory-card:hover {
+    transform:
+        translateY(-8px)
+        rotate(0);
+}
+
+.memory-card img,
+.memory-card video {
+    width: 100%;
+
+    display: block;
+
+    max-height: 600px;
+
+    object-fit: cover;
+
+    border: 2px solid #4b4031;
+
+    background: #b7a989;
+}
+
+.memory-caption {
+    text-align: center;
+
+    margin-top: 10px;
+
+    font-size: 23px;
+
+    color: #594936;
+}
+
+/* =========================
+   LETTER
+========================= */
+
+.letter {
+    margin-top: 30px;
+
+    padding: 30px 27px;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 31px,
+            rgba(105,85,55,.18) 32px
+        ),
+        #eadfbd;
+
+    border:
+        3px solid
+        #56462e;
+
+    box-shadow:
+        6px 8px 0 rgba(60,45,25,.18);
+
+    position: relative;
+    z-index: 10;
+
+    transform: rotate(-.5deg);
+}
+
+.letter::before {
+    content: "♡";
+
+    position: absolute;
+
+    top: 10px;
+    right: 18px;
+
+    font-size: 30px;
+
+    color: #9a4d43;
+}
+
+.letter p {
+    font-size: 23px;
+
+    line-height: 1.7;
+
+    color: #554631;
+
+    margin-bottom: 19px;
+}
+
+.letter-signature {
+    text-align: right;
+
+    font-family: "Permanent Marker", cursive;
+
+    font-size: 27px;
+
+    color: #81443d;
+
+    margin-top: 25px;
+}
+
+/* =========================
+   FINAL
+========================= */
+
+.forever {
+    text-align: center;
+
+    margin-top: 25px;
+
+    position: relative;
+    z-index: 5;
+}
+
+.forever-heart {
+    font-size: 70px;
+
+    color: #9c493f;
+
+    margin: 20px;
+
+    animation: heartbeat 1.7s infinite;
+}
+
+.forever-text {
+    max-width: 650px;
+
+    margin: 25px auto 0;
+
+    font-size: 23px;
+
+    line-height: 1.6;
+
+    color: #594a37;
+}
+
+.forever-text strong {
+    color: #8d443c;
+
+    font-family: "Permanent Marker", cursive;
+}
+
+.final-love {
+    text-align: center;
+
+    margin-top: 50px;
+
+    padding-top: 30px;
+
+    border-top:
+        3px dashed
+        rgba(75,55,30,.3);
+
+    position: relative;
+    z-index: 5;
+}
+
+.final-love .small-love {
+    font-size: 26px;
+
+    color: #735c3d;
+
+    margin-bottom: 10px;
+}
+
+.final-love .main-love {
+    font-family: "Permanent Marker", cursive;
+
+    font-size: clamp(35px, 6vw, 55px);
+
+    color: #443629;
+}
+
+.final-love .signature {
+    margin-top: 12px;
+
+    font-size: 29px;
+
+    color: #805044;
+}
+
+/* =========================
+   TIMELINE
+========================= */
+
+.timeline-section {
+    margin-top: 65px;
+
+    position: relative;
+    z-index: 5;
+}
+
+.timeline-section-title {
+    text-align: center;
+
+    font-family: "Permanent Marker", cursive;
+
+    font-size: clamp(30px, 5vw, 47px);
+
+    color: #493b2b;
+}
+
+.timeline-section-subtitle {
+    text-align: center;
+
+    margin-top: 7px;
+
+    font-size: 22px;
+
+    color: #735f42;
+}
+
+.timeline {
+    margin-top: 30px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 25px;
+}
+
+.timeline-card {
+    background: #e8d69e;
+
+    border:
+        3px solid
+        #50412d;
+
+    padding: 20px 17px;
+
+    box-shadow:
+        5px 6px 0 rgba(60,45,25,.18);
+
+    transition: .3s;
+
+    transform: rotate(-1deg);
+}
+
+.timeline-card:nth-child(even) {
+    background: #d5bba2;
+
+    transform:
+        translateY(15px)
+        rotate(1deg);
+}
+
+.timeline-card:hover {
+    transform:
+        translateY(-5px)
+        rotate(0);
+}
+
+.timeline-title {
+    font-family: "Permanent Marker", cursive;
+
+    font-size: 23px;
+
+    color: #55432f;
+
+    line-height: 1.2;
+}
+
+.timeline-date {
+    margin-top: 7px;
+
+    font-family: "Special Elite", serif;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+    color: #765f40;
+}
+
+.mini-timer {
+    margin-top: 13px;
+
+    padding-top: 11px;
+
+    border-top:
+        2px dashed
+        rgba(85,65,35,.3);
+
+    font-family: "Special Elite", serif;
+
+    font-size: 10px;
+
+    line-height: 1.7;
+
+    color: #69563b;
+}
+
+/* =========================
+   DOODLES
+========================= */
+
+.doodle {
+    position: absolute;
+
+    font-size: 38px;
+
+    color: rgba(83,65,40,.6);
+
+    z-index: 2;
+
+    pointer-events: none;
+}
+
+.doodle.heart {
+    top: 75px;
+    left: 45px;
+
+    transform: rotate(-15deg);
+}
+
+.doodle.star {
+    bottom: 45px;
+    right: 40px;
+
+    transform: rotate(12deg);
+}
+
+.doodle.arrow {
+    top: 45%;
+    right: 25px;
+
+    font-size: 50px;
+
+    transform: rotate(15deg);
+}
+
+/* =========================
+   FLOATING HEARTS
+========================= */
+
+.float-heart {
+    position: fixed;
+
+    bottom: -30px;
+
+    color: #9b4d42;
+
+    pointer-events: none;
+
+    z-index: 3;
+
+    animation:
+        floatUp 7s linear forwards;
+}
+
+@keyframes floatUp {
+    from {
+        transform:
+            translateY(0)
+            rotate(0);
+
+        opacity: 0;
+    }
+
+    15% {
+        opacity: .55;
+    }
+
+    to {
+        transform:
+            translateY(-110vh)
+            rotate(25deg);
+
+        opacity: 0;
+    }
+}
+
+/* =========================
+   MUSIC
+========================= */
+
+.music {
+    position: fixed;
+
+    right: 16px;
+    bottom: 16px;
+
+    z-index: 1000;
+
+    border:
+        3px solid
+        #3e3528;
+
+    background: #e2b856;
+
+    color: #443629;
+
+    padding: 11px 15px;
+
+    cursor: pointer;
+
+    font-family: "Permanent Marker", cursive;
+
+    font-size: 11px;
+
+    box-shadow:
+        4px 5px 0 #4a4030;
+
+    transform: rotate(1deg);
+
+    transition: .2s;
+}
+
+.music:hover {
+    transform:
+        translateY(-3px)
+        rotate(-1deg);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width: 700px) {
+
+    .progress-wrap {
+        top: 9px;
+
+        width: 48vw;
+
+        height: 8px;
+    }
+
+    .page {
+        padding: 48px 7px 30px;
+
+        align-items: flex-start;
+    }
+
+    .book {
+        display: block;
+
+        width: 100%;
+
+        min-height: 0;
+
+        filter:
+            drop-shadow(0 15px 15px rgba(35,45,30,.25));
+    }
+
+    .paper {
+        min-height: 0;
+
+        padding:
+            45px 25px 45px;
+
+        border: 3px solid #302c25 !important;
+
+        border-radius: 8px !important;
+
+        transform: none !important;
+    }
+
+    .paper.left {
+        border-bottom: 0 !important;
+    }
+
+    .paper.right {
+        border-top: 0 !important;
+    }
+
+    .book::before {
+        display: none;
+    }
+
+    .rings {
+        display: none;
+    }
+
+    .tape.one {
+        right: 25px;
+    }
+
+    .tape.two {
+        left: 25px;
+    }
+
+    h1 {
+        font-size: clamp(43px, 14vw, 68px);
+    }
+
+    h2 {
+        font-size: clamp(38px, 12vw, 58px);
+    }
+
+    .subtitle {
+        font-size: 20px;
+    }
+
+    .story {
+        font-size: 21px;
+        line-height: 1.55;
+    }
+
+    .quote {
+        font-size: 23px;
+    }
+
+    .note {
+        font-size: 19px;
+
+        min-width: 115px;
+    }
+
+    .opening-note {
+        font-size: 21px;
+    }
+
+    .media-gallery {
+        grid-template-columns: 1fr;
+
+        gap: 35px;
+    }
+
+    .memory-card:nth-child(1),
+    .memory-card:nth-child(2),
+    .memory-card:nth-child(3),
+    .memory-card:nth-child(4),
+    .memory-card:nth-child(5) {
+        width: 100%;
+
+        grid-column: auto;
+
+        transform:
+            rotate(-1.5deg);
+    }
+
+    .memory-card:nth-child(even) {
+        transform:
+            rotate(1.5deg);
+    }
+
+    .memory-card img,
+    .memory-card video {
+        max-height: 520px;
+    }
+
+    .timeline {
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+    }
+
+    .timeline-card,
+    .timeline-card:nth-child(even) {
+        transform: rotate(-1deg);
+    }
+
+    .letter {
+        padding: 27px 20px;
+    }
+
+    .letter p {
+        font-size: 21px;
+        line-height: 1.6;
+    }
+
+    .forever-text {
+        font-size: 20px;
+    }
+
+    .music {
+        right: 9px;
+        bottom: 9px;
+
+        padding: 9px 11px;
+    }
+
+    .doodle {
+        opacity: .45;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     PROGRESS
+========================= -->
+
+<div class="progress-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+</div>
+
+
+<!-- =========================
+     MUSIC
+========================= -->
+
+<audio id="music" loop preload="auto">
+    <source src="music/L-O-V-E.mp3" type="audio/mpeg">
+</audio>
+
+<button class="music" onclick="toggleMusic()" id="musicBtn">
+    ♫ OUR SONG
+</button>
+
+
+<!-- =========================
+     OPENING
+========================= -->
+
+<section class="page active" id="opening">
+
+<div class="book">
+
+<div class="rings">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+</div>
+
+<div class="paper left">
+
+<div class="tape one"></div>
+
+<div class="doodle heart">♡</div>
+<div class="doodle star">✦</div>
+
+<div class="opening">
+
+<div class="label">
+our story • volume one
+</div>
+
+<div class="opening-heart">
+♡
+</div>
+
+<h1>
+How We<br>
+Became Us
+</h1>
+
+<p class="subtitle">
+It wasn't one big moment.
+
+It was a bunch of little ones.
+
+A meeting.
+
+A group chat.
+
+A random DM.
+
+A first date.
+
+Three days of trying not to talk.
+
+And one very important 3:00 AM.
+</p>
+
+<div class="opening-note">
+a scrapbook of us ♡
+</div>
+
+<br>
+
+<button class="next" onclick="startStory()">
+START THE STORY →
+</button>
+
+</div>
+
+</div>
+
+<div class="paper right">
+
+<div class="tape two"></div>
+
+<div class="doodle star">✦</div>
+
+<div class="story" style="margin-top:80px;text-align:center;">
+
+<p style="font-size:32px;">
+Every great story has a beginning.
+</p>
+
+<br>
+
+<p style="font-size:25px;">
+Ours just happened to start
+with a profile picture...
+</p>
+
+<br>
+
+<p style="font-family:'Permanent Marker';font-size:28px;color:#8c4b3e;">
+and a very nosy boy.
+</p>
+
+<div class="quote" style="margin-top:50px;">
+Three days of extremely serious research.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     JUNE 1
+========================= -->
+
+<section class="page" id="june1">
+
+<div class="book">
+
+<div class="rings">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+</div>
+
+<div class="paper left">
+
+<div class="tape one"></div>
+
+<div class="doodle heart">♡</div>
+
+<div class="label">
+chapter one
+</div>
+
+<h2>
+June 1.
+</h2>
+
+<div class="date">
+THE DAY WE MET
+</div>
+
+<div class="story">
+
+June 1st.
+
+Technically, this is where everything started.
+
+I saw your profile picture.
+
+And I'll be honest...
+
+<strong>I liked what I saw.</strong>
+
+But instead of immediately shooting my shot,
+I decided to be a little smarter about it.
+
+So I gave myself three days.
+
+Three days to watch how you acted.
+
+Three days to figure out what kind of person you were.
+
+Basically...
+
+<strong>I was conducting extremely serious research.</strong>
+
+</div>
+
+<div class="notes">
+
+<div class="note">
+3 days of research
+</div>
+
+<div class="note">
+very professional btw
+</div>
+
+</div>
+
+</div>
+
+<div class="paper right">
+
+<div class="tape two"></div>
+
+<div class="doodle star">✦</div>
+
+<div class="june1-photo">
+
+<img src="assets/yara1.jpg" alt="Yara">
+
+<div class="photo-caption">
+the girl I was secretly observing 👀
+</div>
+
+</div>
+
+<div class="quote">
+“Before I made a move,
+I wanted to know who you were.”
+</div>
+
+<div class="story">
+
+And apparently...
+
+whatever I saw during those three days
+was enough to make me want to find out more.
+
+<strong>Good decision, past me.</strong>
+
+</div>
+
+<div style="text-align:center">
+
+<button class="next" onclick="showPage('june3')">
+NEXT MEMORY →
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     JUNE 3
+========================= -->
+
+<section class="page" id="june3">
+
+<div class="book">
+
+<div class="rings">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+</div>
+
+<div class="paper left">
+
+<div class="tape one"></div>
+
+<div class="label">
+chapter two
+</div>
+
+<h2>
+Then we<br>
+started talking.
+</h2>
+
+<div class="date">
+JUNE 3 • THE GROUP CHAT ERA
+</div>
+
+<div class="story">
+
+Three days later...
+
+we started talking in the group chat.
+
+And apparently I had decided
+that simply observing from a distance
+was no longer enough.
+
+This was the beginning of us actually
+getting to know each other.
+
+And, of course,
+we immediately started with the important questions.
+
+</div>
+
+<div class="notes">
+
+<div class="note">
+why wont u say hi to me
+</div>
+
+<div class="note">
+am i the son of a black duck
+</div>
+
+</div>
+
+</div>
+
+<div class="paper right">
+
+<div class="tape two"></div>
+
+<div class="doodle heart">♡</div>
+
+<div class="quote">
+
+“Honestly, I'm not sure which one of us
+should've realized what was happening first.”
+
+</div>
+
+<div class="story">
+
+But somewhere between the random conversations,
+the jokes, and everything else...
+
+<strong>I started looking forward to talking to you.</strong>
+
+</div>
+
+<div class="quote">
+Two people.
+
+One group chat.
+
+Zero idea where this was going.
+</div>
+
+<div style="text-align:center">
+
+<button class="next" onclick="showPage('june10')">
+THE FIRST DM →
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     JUNE 10
+========================= -->
+
+<section class="page" id="june10">
+
+<div class="book">
+
+<div class="rings">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+</div>
+
+<div class="paper left">
+
+<div class="tape one"></div>
+
+<div class="label">
+chapter three
+</div>
+
+<h2>
+June 10.
+</h2>
+
+<div class="date">
+THE FIRST DM
+</div>
+
+<div class="story">
+
+This time...
+
+I actually made my move.
+
+June 10th.
+
+The day I sent you my first DM.
+
+And this time,
+we have the evidence.
+
+</div>
+
+<div class="quote">
+One little message.
+
+Look what you started.
+</div>
+
+</div>
+
+<div class="paper right">
+
+<div class="tape two"></div>
+
+<div class="dm-screenshot">
+
+<img src="assets/firstdm1.jpg" alt="Our first DM">
+
+</div>
+
+<div class="story">
+
+Looking back at that screenshot now,
+it's kind of crazy.
+
+Because neither of us knew
+how much that little conversation
+was about to become.
+
+</div>
+
+<div class="story">
+
+One DM.
+
+One tiny beginning.
+
+<strong>One very big story.</strong>
+
+</div>
+
+<div style="text-align:center">
+
+<button class="next" onclick="showPage('june11')">
+NEXT →
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     JUNE 11
+========================= -->
+
+<section class="page" id="june11">
+
+<div class="book">
+
+<div class="rings">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+</div>
+
+<div class="paper left">
+
+<div class="tape one"></div>
+
+<div class="label">
+chapter four
+</div>
+
+<h2>
+Our first<br>
+e-date. ♡
+</h2>
+
+<div class="date">
+JUNE 11
+</div>
+
+<div class="story">
+
+And then...
+
+just one day later...
+
+we went on our first e-date.
+
+Which is kind of funny when you think about it.
+
+We had only been talking for a little while,
+and somehow we had already decided,
+
+<strong>“Yeah, let's go on a date.”</strong>
+
+Online or not...
+
+it was still our first date.
+
+</div>
+
+</div>
+
+<div class="paper right">
+
+<div class="tape two"></div>
+
+<div class="quote">
+
+Different places.
+
+Same night.
+
+And somehow it already felt special.
+
+</div>
+
+<div class="notes">
+
+<div class="note">
+FIRST E-DATE ♡
+</div>
+
+<div class="note">
+date successful ✓
+</div>
+
+<div class="note">
+we're cooked
+</div>
+
+</div>
+
+<div class="story">
+
+And I think that was one of the first moments
+where this stopped feeling like
+just another conversation.
+
+It started feeling like...
+
+<strong>us.</strong>
+
+</div>
+
+<div style="text-align:center">
+
+<button class="next" onclick="showPage('nocontact')">
+THEN WE DID SOMETHING STUPID →
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     NO CONTACT
+========================= -->
+
+<section class="page" id="nocontact">
+
+<div class="book">
+
+<div class="rings">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+</div>
+
+<div class="paper left">
+
+<div class="tape one"></div>
+
+<div class="label">
+chapter five
+</div>
+
+<h2>
+The three days<br>
+we tried.
+</h2>
+
+<div class="date">
+JUNE 12 — JUNE 14
+</div>
+
+<div class="story">
+
+Then came June 12th.
+
+And for three days...
+
+we didn't talk.
+
+We tried to stay away from each other.
+
+We probably thought we were proving
+that we could actually do it.
+
+Turns out...
+
+<strong>we were both terrible at it.</strong>
+
+</div>
+
+<div class="quote hand">
+
+We thought distance would make things easier.
+
+Instead, it just made us miss each other.
+
+</div>
+
+</div>
+
+<div class="paper right">
+
+<div class="tape two"></div>
+
+<div class="story">
+
+Those three days made something pretty obvious.
+
+No matter how much we tried to pretend
+we were fine without talking...
+
+we weren't.
+
+We missed each other way too much.
+
+And somewhere in those three days,
+we realized something:
+
+<strong>
+staying away from each other
+wasn't really what either of us wanted.
+</strong>
+
+</div>
+
+<div class="notes">
+
+<div class="note">
+miss you
+</div>
+
+<div class="note">
+miss you too
+</div>
+
+<div class="note">
+guys stop cheering
+</div>
+
+<div class="note">
+i broke no contact 😭
+</div>
+
+</div>
+
+<div class="quote">
+
+Sometimes you don't realize
+how much someone means to you
+until you try going without them.
+
+</div>
+
+<div style="text-align:center">
+
+<button class="next" onclick="showPage('july3')">
+THEN CAME JULY 3... →
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     JULY 3
+========================= -->
+
+<section class="page" id="july3">
+
+<div class="book">
+
+<div class="rings">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+</div>
+
+<div class="paper left">
+
+<div class="tape one"></div>
+
+<div class="label">
+chapter six • 3:00 AM
+</div>
+
+<h2>
+July 3.
+</h2>
+
+<div class="date">
+3:00 AM
+</div>
+
+<div class="big-moment">
+
+<div class="big-time">
+03:00 AM
+</div>
+
+<div class="official">
+the moment we became us. ♡
+</div>
+
+</div>
+
+<div class="story" style="text-align:center">
+
+That night...
+
+at exactly <strong>3:00 AM</strong>...
+
+we stopped being almost.
+
+We became official.
+
+And at that exact same time,
+we said those three little words.
+
+<strong>I love you.</strong>
+
+</div>
+
+</div>
+
+<div class="paper right">
+
+<div class="tape two"></div>
+
+<div class="notes">
+
+<div class="note">
+OFFICIAL ♡
+</div>
+
+<div class="note">
+I LOVE YOU ♡
+</div>
+
+</div>
+
+<div class="quote hand" style="text-align:center">
+
+Same night.<br>
+Same hour.<br>
+My favorite beginning.
+
+</div>
+
+<div class="story" style="text-align:center">
+
+After everything that happened before this...
+
+the group chat.
+
+The first DM.
+
+The first date.
+
+Those three days apart.
+
+It all led here.
+
+<strong>To us.</strong>
+
+</div>
+
+<div style="text-align:center">
+
+<button class="next" onclick="showPage('littlethings')">
+AND THEN WE GOT EVEN MORE US →
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     LITTLE THINGS
+========================= -->
+
+<section class="page" id="littlethings">
+
+<div class="book">
+
+<div class="rings">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+</div>
+
+<div class="paper left">
+
+<div class="tape one"></div>
+
+<div class="label">
+the important nonsense
+</div>
+
+<h2>
+Little things<br>
+that always<br>
+make me smile.
+</h2>
+
+<div class="story">
+
+Not everything needs a date.
+
+Some memories are just random moments
+that somehow became permanently attached
+to us.
+
+And honestly?
+
+<strong>Those might be my favorites.</strong>
+
+</div>
+
+<div class="notes">
+
+<div class="note">
+24 chickens<br>
++ 1 cuck 🐔
+</div>
+
+<div class="note">
+colorful chicks<br>
+RIP after 3 days 💀
+</div>
+
+<div class="note">
+pspsps meow 🐈
+</div>
+
+</div>
+
+</div>
+
+<div class="paper right">
+
+<div class="tape two"></div>
+
+<div class="notes">
+
+<div class="note">
+i dont want<br>
+i dont want<br>
+i dont want
+</div>
+
+<div class="note">
+PLEASE PLEASE PLEASE<br>
+SEND
+</div>
+
+<div class="note">
+this is who ur talking to btw
+</div>
+
+</div>
+
+<div class="quote">
+
+“Oh don't send me anymore
+of your photos then.”
+
+<br><br>
+
+<span class="hand">
+PLEASE PLEASE PLEASE SEND.
+</span>
+
+</div>
+
+<div class="quote hand">
+
+And yes...
+
+I remember all of it.
+
+Even the stupid stuff.
+
+Especially the stupid stuff.
+
+</div>
+
+<div style="text-align:center">
+
+<button class="next" onclick="showPage('photos')">
+THE MEMORIES I KEEP →
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     PHOTOS
+========================= -->
+
+<section class="page" id="photos">
+
+<div class="book">
+
+<div class="rings">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+</div>
+
+<div class="paper left">
+
+<div class="tape one"></div>
+
+<div class="label">
+the little archive
+</div>
+
+<h2>
+Photos that<br>
+always make me<br>
+happy.
+</h2>
+
+<div class="story">
+
+The pictures.
+
+The videos.
+
+The random little moments.
+
+The things that probably don't mean much
+to anyone else...
+
+but somehow make me smile every time.
+
+<strong>Because they're you.</strong>
+
+</div>
+
+</div>
+
+<div class="paper right">
+
+<div class="tape two"></div>
+
+<div class="media-gallery">
+
+<div class="memory-card">
+
+<video autoplay muted loop playsinline>
+<source src="assets/yara2.mp4" type="video/mp4">
+</video>
+
+<div class="memory-caption">
+just you ♡
+</div>
+
+</div>
+
+<div class="memory-card">
+
+<img src="assets/yara3.jpg" alt="Yara">
+
+<div class="memory-caption">
+one of my favorite little memories.
+</div>
+
+</div>
+
+<div class="memory-card">
+
+<video autoplay muted loop playsinline>
+<source src="assets/yara4.mp4" type="video/mp4">
+</video>
+
+<div class="memory-caption">
+this one still makes me smile.
+</div>
+
+</div>
+
+<div class="memory-card">
+
+<img src="assets/yara5.jpg" alt="Yara">
+
+<div class="memory-caption">
+♡
+</div>
+
+</div>
+
+<div class="memory-card">
+
+<img src="assets/yara6.jpg" alt="Yara">
+
+<div class="memory-caption">
+another one for the scrapbook.
+</div>
+
+</div>
+
+</div>
+
+<div class="quote hand">
+
+And hopefully...
+
+this little archive gets
+a lot longer.
+
+</div>
+
+<div style="text-align:center">
+
+<button class="next" onclick="showPage('letter')">
+BEFORE WE KEEP GOING →
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     LOVE LETTER
+========================= -->
+
+<section class="page" id="letter">
+
+<div class="book">
+
+<div class="rings">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+</div>
+
+<div class="paper left">
+
+<div class="tape one"></div>
+
+<div class="label">
+before we keep going...
+</div>
+
+<h2>
+A little<br>
+letter for you. ♡
+</h2>
+
+<div class="story">
+
+Some things are easier to say
+when you write them down.
+
+So...
+
+this one's for you.
+
+</div>
+
+<div class="quote">
+For the girl who somehow
+became my favorite person.
+</div>
+
+</div>
+
+<div class="paper right">
+
+<div class="tape two"></div>
+
+<div class="letter">
+
+<p>
+Yara,
+</p>
+
+<p>
+Sometimes I think about how weird it is that
+something this important to me started so simply.
+</p>
+
+<p>
+A profile picture.
+
+A group chat.
+
+A few conversations.
+
+One DM.
+
+A first date.
+
+Three days where we tried to stay away from each other
+and completely failed.
+</p>
+
+<p>
+None of those moments looked like they were going
+to change my life when they happened.
+
+But together, they gave me you.
+
+And I don't think I'll ever stop being grateful for that.
+</p>
+
+<p>
+You became someone I look forward to talking to,
+someone I miss when you're not around,
+someone who can make me laugh over the dumbest things,
+and someone whose little habits and random jokes
+somehow became some of my favorite parts of my day.
+</p>
+
+<p>
+I love the serious moments with you.
+
+But I also love the stupid ones.
+
+The jokes that make absolutely no sense.
+
+The random conversations.
+
+The “I don't want” moments.
+
+The chickens.
+
+The meowing.
+
+The pictures.
+
+The things that probably wouldn't mean anything
+to anyone else.
+
+Because they're ours.
+</p>
+
+<p>
+And I want you to know something.
+
+I'm not grateful only for the day
+we became official.
+
+I'm grateful for every little moment
+that brought me there.
+
+Because if you took away even one of those moments...
+
+we might not have become us.
+</p>
+
+<p>
+So I don't just love the person
+I get to call my girlfriend.
+
+I love the story that brought me to you.
+
+And I love the fact that
+our story is still being written.
+</p>
+
+<p>
+I don't know exactly what every next page will look like.
+
+But I know I want to be there for it.
+
+The cute pages.
+
+The chaotic pages.
+
+The pages where we're laughing over something stupid.
+
+The pages where we miss each other.
+
+The pages we haven't even imagined yet.
+</p>
+
+<p>
+And if I get to keep writing them with you...
+
+then honestly,
+
+I don't need to know how the story ends yet.
+</p>
+
+<div class="letter-signature">
+I love you, Yara. ♡<br>
+— Wael
+</div>
+
+</div>
+
+<div style="text-align:center">
+
+<button class="next" onclick="showPage('final')">
+ONE LAST PAGE →
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     FINAL PAGE
+========================= -->
+
+<section class="page" id="final">
+
+<div class="book">
+
+<div class="rings">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+</div>
+
+<div class="paper left">
+
+<div class="tape one"></div>
+
+<div class="label">
+the last page... for now
+</div>
+
+<div class="forever">
+
+<div class="forever-heart">
+♡
+</div>
+
+<h1>
+Forever<br>
+sounds nice.
+</h1>
+
+<div class="forever-text">
+
+Maybe one day we'll look back
+at these first few pages and laugh.
+
+At how we met.
+
+At how I spent three days
+“researching” you.
+
+At the group chat.
+
+At the first DM.
+
+At those three days apart.
+
+At how we somehow ended up here.
+
+<br><br>
+
+This isn't the end of our story.
+
+It's barely the beginning.
+
+There are still so many memories
+we haven't made.
+
+So many pictures we haven't taken.
+
+So many dates we haven't gone on.
+
+So many stupid jokes
+we haven't laughed at yet.
+
+<br><br>
+
+And if I get to experience
+all of that with you...
+
+then yeah.
+
+<strong>Forever sounds really nice.</strong>
+
+</div>
+
+<div class="forever-heart">
+♥
+</div>
+
+</div>
+
+</div>
+
+<div class="paper right">
+
+<div class="tape two"></div>
+
+<div class="timeline-section">
+
+<div class="timeline-section-title">
+Our little cute dates ♡
+</div>
+
+<div class="timeline-section-subtitle">
+just a few moments that started everything.
+</div>
+
+<div class="timeline">
+
+<div class="timeline-card">
+
+<div class="timeline-title">
+♡ We met
+</div>
+
+<div class="timeline-date">
+JUNE 1, 2026
+</div>
+
+<div class="mini-timer" id="timerMet">
+Loading...
+</div>
+
+</div>
+
+<div class="timeline-card">
+
+<div class="timeline-title">
+♡ We started talking
+</div>
+
+<div class="timeline-date">
+JUNE 3, 2026
+</div>
+
+<div class="mini-timer" id="timerTalking">
+Loading...
+</div>
+
+</div>
+
+<div class="timeline-card">
+
+<div class="timeline-title">
+♡ The first DM
+</div>
+
+<div class="timeline-date">
+JUNE 10, 2026
+</div>
+
+<div class="mini-timer" id="timerDM">
+Loading...
+</div>
+
+</div>
+
+<div class="timeline-card">
+
+<div class="timeline-title">
+♡ Our first e-date
+</div>
+
+<div class="timeline-date">
+JUNE 11, 2026
+</div>
+
+<div class="mini-timer" id="timerDate">
+Loading...
+</div>
+
+</div>
+
+<div class="timeline-card">
+
+<div class="timeline-title">
+♡ We couldn't stay away
+</div>
+
+<div class="timeline-date">
+JUNE 12, 2026
+</div>
+
+<div class="mini-timer" id="timerNoContact">
+Loading...
+</div>
+
+</div>
+
+<div class="timeline-card">
+
+<div class="timeline-title">
+♡ We became official
+</div>
+
+<div class="timeline-date">
+JULY 3, 2026 • 3:00 AM
+</div>
+
+<div class="mini-timer" id="timerOfficial">
+Loading...
+</div>
+
+</div>
+
+<div class="timeline-card">
+
+<div class="timeline-title">
+♡ Our first “I love you”
+</div>
+
+<div class="timeline-date">
+JULY 3, 2026 • 3:00 AM
+</div>
+
+<div class="mini-timer" id="timerLove">
+Loading...
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="final-love">
+
+<div class="small-love">
+and this is only page one.
+</div>
+
+<div class="main-love">
+I love you, Yara.
+</div>
+
+<div class="signature">
+— Wael ♡
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<script>
+
+/* =========================
+   PAGE NAVIGATION
+========================= */
+
+const pageOrder = [
+    "opening",
+    "june1",
+    "june3",
+    "june10",
+    "june11",
+    "nocontact",
+    "july3",
+    "littlethings",
+    "photos",
+    "letter",
+    "final"
+];
+
+let currentPage = 0;
+
+
+function updateProgress() {
+
+    const progressBar =
+        document.getElementById("progressBar");
+
+    if (!progressBar) return;
+
+    const percentage =
+        ((currentPage + 1) / pageOrder.length) * 100;
+
+    progressBar.style.width =
+        percentage + "%";
+}
+
+
+function showPage(id) {
+
+    const target =
+        document.getElementById(id);
+
+    if (!target) return;
+
+    document
+        .querySelectorAll(".page")
+        .forEach(page => {
+            page.classList.remove("active");
+        });
+
+    target.classList.add("active");
+
+    currentPage =
+        pageOrder.indexOf(id);
+
+    if (currentPage < 0)
+        currentPage = 0;
+
+    updateProgress();
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+updateProgress();
+
+
+/* =========================
+   START STORY
+========================= */
+
+function startStory() {
+
+    const music =
+        document.getElementById("music");
+
+    music.play()
+    .then(() => {
+
+        playing = true;
+
+        musicBtn.textContent =
+            "Ⅱ PAUSE OUR SONG";
+
+    })
+    .catch(() => {});
+
+    showPage("june1");
+}
+
+
+/* =========================
+   TIMER SYSTEM
+========================= */
+
+function getDifference(date) {
+
+    const now =
+        new Date();
+
+    let difference =
+        now - date;
+
+    if (difference < 0)
+        difference = 0;
+
+    const totalSeconds =
+        Math.floor(
+            difference / 1000
+        );
+
+    const days =
+        Math.floor(
+            totalSeconds / 86400
+        );
+
+    const hours =
+        Math.floor(
+            (totalSeconds % 86400) / 3600
+        );
+
+    const minutes =
+        Math.floor(
+            (totalSeconds % 3600) / 60
+        );
+
+    const seconds =
+        totalSeconds % 60;
+
+    return {
+        days,
+        hours,
+        minutes,
+        seconds
+    };
+}
+
+
+function formatTimer(date) {
+
+    const t =
+        getDifference(date);
+
+    return `
+        ${t.days} days •
+        ${String(t.hours).padStart(2,"0")} hours •
+        ${String(t.minutes).padStart(2,"0")} minutes •
+        ${String(t.seconds).padStart(2,"0")} seconds
+    `;
+}
+
+
+/* =========================
+   IMPORTANT DATES
+========================= */
+
+const dates = {
+
+    met:
+        new Date("2026-06-01T00:00:00"),
+
+    talking:
+        new Date("2026-06-03T00:00:00"),
+
+    dm:
+        new Date("2026-06-10T00:00:00"),
+
+    firstDate:
+        new Date("2026-06-11T00:00:00"),
+
+    noContact:
+        new Date("2026-06-12T00:00:00"),
+
+    official:
+        new Date("2026-07-03T03:00:00"),
+
+    love:
+        new Date("2026-07-03T03:00:00")
+
+};
+
+
+function updateAllTimers() {
+
+    const elements = {
+
+        timerMet:
+            document.getElementById("timerMet"),
+
+        timerTalking:
+            document.getElementById("timerTalking"),
+
+        timerDM:
+            document.getElementById("timerDM"),
+
+        timerDate:
+            document.getElementById("timerDate"),
+
+        timerNoContact:
+            document.getElementById("timerNoContact"),
+
+        timerOfficial:
+            document.getElementById("timerOfficial"),
+
+        timerLove:
+            document.getElementById("timerLove")
+
+    };
+
+
+    if (elements.timerMet)
+        elements.timerMet.textContent =
+            formatTimer(dates.met);
+
+    if (elements.timerTalking)
+        elements.timerTalking.textContent =
+            formatTimer(dates.talking);
+
+    if (elements.timerDM)
+        elements.timerDM.textContent =
+            formatTimer(dates.dm);
+
+    if (elements.timerDate)
+        elements.timerDate.textContent =
+            formatTimer(dates.firstDate);
+
+    if (elements.timerNoContact)
+        elements.timerNoContact.textContent =
+            formatTimer(dates.noContact);
+
+    if (elements.timerOfficial)
+        elements.timerOfficial.textContent =
+            formatTimer(dates.official);
+
+    if (elements.timerLove)
+        elements.timerLove.textContent =
+            formatTimer(dates.love);
+
+}
+
+
+updateAllTimers();
+
+setInterval(
+    updateAllTimers,
+    1000
+);
+
+
+/* =========================
+   MUSIC
+========================= */
+
+const music =
+    document.getElementById("music");
+
+const musicBtn =
+    document.getElementById("musicBtn");
+
+let playing = false;
+
+
+function toggleMusic() {
+
+    if (!playing) {
+
+        music.play()
+        .then(() => {
+
+            playing = true;
+
+            musicBtn.textContent =
+                "Ⅱ PAUSE OUR SONG";
+
+        })
+        .catch(() => {
+
+            alert(
+                "Make sure L-O-V-E.mp3 is inside your music folder ❤️"
+            );
+
+        });
+
+    } else {
+
+        music.pause();
+
+        playing = false;
+
+        musicBtn.textContent =
+            "♫ OUR SONG";
+
+    }
+
+}
+
+
+/* =========================
+   FLOATING HEARTS
+========================= */
+
+function createHeart() {
+
+    const heart =
+        document.createElement("div");
+
+    heart.className =
+        "float-heart";
+
+    heart.textContent =
+        Math.random() > .5
+        ? "♡"
+        : "♥";
+
+    heart.style.left =
+        Math.random() * 100 + "vw";
+
+    heart.style.fontSize =
+        (12 + Math.random() * 17) + "px";
+
+    heart.style.animationDuration =
+        (5 + Math.random() * 5) + "s";
+
+    document.body.appendChild(
+        heart
+    );
+
+    setTimeout(() => {
+
+        heart.remove();
+
+    }, 10000);
+
+}
+
+
+setInterval(
+    createHeart,
+    1100
+);
+
+
+/* =========================
+   KEYBOARD NAVIGATION
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(e) {
+
+        if (e.key === "ArrowRight") {
+
+            if (
+                currentPage <
+                pageOrder.length - 1
+            ) {
+
+                currentPage++;
+
+                showPage(
+                    pageOrder[currentPage]
+                );
+
+            }
+
+        }
+
+
+        if (e.key === "ArrowLeft") {
+
+            if (currentPage > 0) {
+
+                currentPage--;
+
+                showPage(
+                    pageOrder[currentPage]
+                );
+
+            }
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
