@@ -23,10 +23,10 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
 
-background:
-    radial-gradient(circle at 20% 20%, rgba(255,255,255,.18), transparent 25%),
-    radial-gradient(circle at 80% 70%, rgba(120,70,70,.08), transparent 25%),
-    #b98f8f;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.18), transparent 25%),
+        radial-gradient(circle at 80% 70%, rgba(120,70,70,.08), transparent 25%),
+        #b98f8f;
 
     color: #40372d;
     font-family: "Patrick Hand", cursive;
@@ -74,8 +74,6 @@ body::before {
     z-index: 1001;
 
     box-shadow: 3px 4px 0 rgba(40,35,25,.25);
-
-    transform-origin: center;
 }
 
 .progress-bar {
@@ -94,7 +92,7 @@ body::before {
 .page {
     min-height: 100vh;
 
-    padding: 65px 18px 50px;
+    padding: 65px 18px 80px;
 
     display: none;
 
@@ -104,7 +102,6 @@ body::before {
 
 .page.active {
     display: flex;
-
     animation: pageIn .65s ease;
 }
 
@@ -148,6 +145,8 @@ body::before {
 
     padding: clamp(38px, 5vw, 70px);
 
+    padding-bottom: 105px;
+
     background:
         radial-gradient(circle at 20% 20%, rgba(255,255,255,.3), transparent 30%),
         radial-gradient(circle at 80% 70%, rgba(100,70,40,.08), transparent 35%),
@@ -187,8 +186,6 @@ body::before {
         rotateY(-2deg);
 }
 
-/* paper edge */
-
 .paper::after {
     content: "";
 
@@ -203,8 +200,6 @@ body::before {
 
     border-radius: 8px;
 }
-
-/* center shadow */
 
 .book::before {
     content: "";
@@ -404,12 +399,11 @@ h2 {
 }
 
 /* =========================
-   BUTTON
+   BUTTONS
 ========================= */
 
-.next {
-    margin-top: 35px;
-
+.next,
+.back {
     padding: 13px 22px;
 
     background: #e3b654;
@@ -430,29 +424,63 @@ h2 {
     box-shadow:
         4px 5px 0 #4b4031;
 
-    transform: rotate(-1deg);
-
     transition:
         transform .2s ease,
         box-shadow .2s ease;
 }
 
-.next:hover {
+.next {
+    margin-top: 35px;
+    transform: rotate(-1deg);
+}
+
+.back {
+    transform: rotate(1deg);
+}
+
+.next:hover,
+.back:hover {
     transform:
         translateY(-4px)
-        rotate(1deg);
+        rotate(0);
 
     box-shadow:
         6px 8px 0 #4b4031;
 }
 
-.next:active {
+.next:active,
+.back:active {
     transform:
         translateY(2px)
         rotate(0);
 
     box-shadow:
         2px 2px 0 #4b4031;
+}
+
+/* =========================
+   INSIDE BOOK NAVIGATION
+========================= */
+
+.story-nav {
+    position: absolute;
+
+    bottom: 28px;
+    left: 35px;
+    right: 35px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    z-index: 100;
+    pointer-events: none;
+}
+
+.story-nav .back,
+.story-nav .next {
+    pointer-events: auto;
+    margin-top: 0;
 }
 
 /* =========================
@@ -1173,48 +1201,6 @@ h2 {
 }
 
 /* =========================
-   MUSIC
-========================= */
-
-.music {
-    position: fixed;
-
-    right: 16px;
-    bottom: 16px;
-
-    z-index: 1000;
-
-    border:
-        3px solid
-        #3e3528;
-
-    background: #e2b856;
-
-    color: #443629;
-
-    padding: 11px 15px;
-
-    cursor: pointer;
-
-    font-family: "Permanent Marker", cursive;
-
-    font-size: 11px;
-
-    box-shadow:
-        4px 5px 0 #4a4030;
-
-    transform: rotate(1deg);
-
-    transition: .2s;
-}
-
-.music:hover {
-    transform:
-        translateY(-3px)
-        rotate(-1deg);
-}
-
-/* =========================
    MOBILE
 ========================= */
 
@@ -1229,7 +1215,7 @@ h2 {
     }
 
     .page {
-        padding: 48px 7px 30px;
+        padding: 48px 7px 75px;
 
         align-items: flex-start;
     }
@@ -1249,7 +1235,7 @@ h2 {
         min-height: 0;
 
         padding:
-            45px 25px 45px;
+            45px 25px 110px;
 
         border: 3px solid #302c25 !important;
 
@@ -1366,11 +1352,16 @@ h2 {
         font-size: 20px;
     }
 
-    .music {
-        right: 9px;
-        bottom: 9px;
+    .story-nav {
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+    }
 
-        padding: 9px 11px;
+    .back,
+    .next {
+        padding: 11px 16px;
+        font-size: 12px;
     }
 
     .doodle {
@@ -1390,18 +1381,14 @@ h2 {
     <div class="progress-bar" id="progressBar"></div>
 </div>
 
-
 <!-- =========================
      MUSIC
+     NO BUTTON — PLAYS AFTER START
 ========================= -->
 
 <audio id="music" loop preload="auto">
     <source src="music/L-O-V-E.mp3" type="audio/mpeg">
 </audio>
-
-<button class="music" onclick="toggleMusic()" id="musicBtn">
-    ♫ OUR SONG
-</button>
 
 
 <!-- =========================
@@ -1524,14 +1511,10 @@ Three days of extremely serious research.
 <div class="book">
 
 <div class="rings">
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
 </div>
 
 <div class="paper left">
@@ -1626,11 +1609,9 @@ was enough to make me want to find out more.
 </div>
 
 <div style="text-align:center">
-
 <button class="next" onclick="showPage('june3')">
 NEXT MEMORY →
 </button>
-
 </div>
 
 </div>
@@ -1649,14 +1630,10 @@ NEXT MEMORY →
 <div class="book">
 
 <div class="rings">
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
 </div>
 
 <div class="paper left">
@@ -1762,14 +1739,10 @@ THE FIRST DM →
 <div class="book">
 
 <div class="rings">
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
 </div>
 
 <div class="paper left">
@@ -1866,14 +1839,10 @@ NEXT →
 <div class="book">
 
 <div class="rings">
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
 </div>
 
 <div class="paper left">
@@ -1982,14 +1951,10 @@ THEN WE DID SOMETHING STUPID →
 <div class="book">
 
 <div class="rings">
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
 </div>
 
 <div class="paper left">
@@ -2115,14 +2080,10 @@ THEN CAME JULY 3... →
 <div class="book">
 
 <div class="rings">
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
 </div>
 
 <div class="paper left">
@@ -2238,14 +2199,10 @@ AND THEN WE GOT EVEN MORE US →
 <div class="book">
 
 <div class="rings">
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
 </div>
 
 <div class="paper left">
@@ -2368,14 +2325,10 @@ THE MEMORIES I KEEP →
 <div class="book">
 
 <div class="rings">
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
 </div>
 
 <div class="paper left">
@@ -2506,14 +2459,10 @@ BEFORE WE KEEP GOING →
 <div class="book">
 
 <div class="rings">
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
 </div>
 
 <div class="paper left">
@@ -2696,14 +2645,10 @@ ONE LAST PAGE →
 <div class="book">
 
 <div class="rings">
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
 </div>
 
 <div class="paper left">
@@ -2795,119 +2740,48 @@ just a few moments that started everything.
 <div class="timeline">
 
 <div class="timeline-card">
-
-<div class="timeline-title">
-♡ We met
-</div>
-
-<div class="timeline-date">
-JUNE 1, 2026
-</div>
-
-<div class="mini-timer" id="timerMet">
-Loading...
-</div>
-
+<div class="timeline-title">♡ We met</div>
+<div class="timeline-date">JUNE 1, 2026</div>
+<div class="mini-timer" id="timerMet">Loading...</div>
 </div>
 
 <div class="timeline-card">
-
-<div class="timeline-title">
-♡ We started talking
-</div>
-
-<div class="timeline-date">
-JUNE 3, 2026
-</div>
-
-<div class="mini-timer" id="timerTalking">
-Loading...
-</div>
-
+<div class="timeline-title">♡ We started talking</div>
+<div class="timeline-date">JUNE 3, 2026</div>
+<div class="mini-timer" id="timerTalking">Loading...</div>
 </div>
 
 <div class="timeline-card">
-
-<div class="timeline-title">
-♡ The first DM
-</div>
-
-<div class="timeline-date">
-JUNE 10, 2026
-</div>
-
-<div class="mini-timer" id="timerDM">
-Loading...
-</div>
-
+<div class="timeline-title">♡ The first DM</div>
+<div class="timeline-date">JUNE 10, 2026</div>
+<div class="mini-timer" id="timerDM">Loading...</div>
 </div>
 
 <div class="timeline-card">
-
-<div class="timeline-title">
-♡ Our first e-date
-</div>
-
-<div class="timeline-date">
-JUNE 11, 2026
-</div>
-
-<div class="mini-timer" id="timerDate">
-Loading...
-</div>
-
+<div class="timeline-title">♡ Our first e-date</div>
+<div class="timeline-date">JUNE 11, 2026</div>
+<div class="mini-timer" id="timerDate">Loading...</div>
 </div>
 
 <div class="timeline-card">
-
-<div class="timeline-title">
-♡ We couldn't stay away
-</div>
-
-<div class="timeline-date">
-JUNE 12, 2026
-</div>
-
-<div class="mini-timer" id="timerNoContact">
-Loading...
-</div>
-
+<div class="timeline-title">♡ We couldn't stay away</div>
+<div class="timeline-date">JUNE 12, 2026</div>
+<div class="mini-timer" id="timerNoContact">Loading...</div>
 </div>
 
 <div class="timeline-card">
-
-<div class="timeline-title">
-♡ We became official
-</div>
-
-<div class="timeline-date">
-JULY 3, 2026 • 3:00 AM
-</div>
-
-<div class="mini-timer" id="timerOfficial">
-Loading...
-</div>
-
+<div class="timeline-title">♡ We became official</div>
+<div class="timeline-date">JULY 3, 2026 • 3:00 AM</div>
+<div class="mini-timer" id="timerOfficial">Loading...</div>
 </div>
 
 <div class="timeline-card">
-
-<div class="timeline-title">
-♡ Our first “I love you”
-</div>
-
-<div class="timeline-date">
-JULY 3, 2026 • 3:00 AM
-</div>
-
-<div class="mini-timer" id="timerLove">
-Loading...
+<div class="timeline-title">♡ Our first “I love you”</div>
+<div class="timeline-date">JULY 3, 2026 • 3:01 AM</div>
+<div class="mini-timer" id="timerLove">Loading...</div>
 </div>
 
 </div>
-
-</div>
-
 </div>
 
 <div class="final-love">
@@ -2956,6 +2830,10 @@ const pageOrder = [
 let currentPage = 0;
 
 
+/* =========================
+   PROGRESS
+========================= */
+
 function updateProgress() {
 
     const progressBar =
@@ -2970,6 +2848,10 @@ function updateProgress() {
         percentage + "%";
 }
 
+
+/* =========================
+   PAGE DISPLAY
+========================= */
 
 function showPage(id) {
 
@@ -3001,7 +2883,64 @@ function showPage(id) {
 }
 
 
-updateProgress();
+/* =========================
+   BACK BUTTON
+========================= */
+
+function goBack() {
+
+    if (currentPage > 0) {
+
+        currentPage--;
+
+        showPage(
+            pageOrder[currentPage]
+        );
+    }
+}
+
+
+/* =========================
+   ADD BACK BUTTONS
+========================= */
+
+function addBackButtons() {
+
+    document
+        .querySelectorAll(".page")
+        .forEach((page, index) => {
+
+            // Opening page doesn't need a back button
+            if (index === 0) return;
+
+            const book =
+                page.querySelector(".book");
+
+            if (!book) return;
+
+            // Don't create duplicates
+            if (
+                book.querySelector(".story-nav")
+            ) return;
+
+            const nav =
+                document.createElement("div");
+
+            nav.className =
+                "story-nav";
+
+            nav.innerHTML = `
+                <button
+                    class="back"
+                    onclick="goBack()"
+                >
+                    ← BACK
+                </button>
+            `;
+
+            book.appendChild(nav);
+        });
+}
 
 
 /* =========================
@@ -3013,19 +2952,25 @@ function startStory() {
     const music =
         document.getElementById("music");
 
-    music.play()
-    .then(() => {
+    /*
+       The START THE STORY button is a
+       user interaction, so the browser
+       allows the music to begin here.
+    */
 
-        playing = true;
+    if (music) {
 
-        musicBtn.textContent =
-            "Ⅱ PAUSE OUR SONG";
+        music.play()
+        .catch(() => {});
 
-    })
-    .catch(() => {});
+    }
 
     showPage("june1");
 }
+
+
+updateProgress();
+addBackButtons();
 
 
 /* =========================
@@ -3119,6 +3064,10 @@ const dates = {
 };
 
 
+/* =========================
+   UPDATE TIMERS
+========================= */
+
 function updateAllTimers() {
 
     const elements = {
@@ -3151,25 +3100,31 @@ function updateAllTimers() {
         elements.timerMet.textContent =
             formatTimer(dates.met);
 
+
     if (elements.timerTalking)
         elements.timerTalking.textContent =
             formatTimer(dates.talking);
+
 
     if (elements.timerDM)
         elements.timerDM.textContent =
             formatTimer(dates.dm);
 
+
     if (elements.timerDate)
         elements.timerDate.textContent =
             formatTimer(dates.firstDate);
+
 
     if (elements.timerNoContact)
         elements.timerNoContact.textContent =
             formatTimer(dates.noContact);
 
+
     if (elements.timerOfficial)
         elements.timerOfficial.textContent =
             formatTimer(dates.official);
+
 
     if (elements.timerLove)
         elements.timerLove.textContent =
@@ -3184,54 +3139,6 @@ setInterval(
     updateAllTimers,
     1000
 );
-
-
-/* =========================
-   MUSIC
-========================= */
-
-const music =
-    document.getElementById("music");
-
-const musicBtn =
-    document.getElementById("musicBtn");
-
-let playing = false;
-
-
-function toggleMusic() {
-
-    if (!playing) {
-
-        music.play()
-        .then(() => {
-
-            playing = true;
-
-            musicBtn.textContent =
-                "Ⅱ PAUSE OUR SONG";
-
-        })
-        .catch(() => {
-
-            alert(
-                "Make sure L-O-V-E.mp3 is inside your music folder ❤️"
-            );
-
-        });
-
-    } else {
-
-        music.pause();
-
-        playing = false;
-
-        musicBtn.textContent =
-            "♫ OUR SONG";
-
-    }
-
-}
 
 
 /* =========================
@@ -3269,7 +3176,6 @@ function createHeart() {
         heart.remove();
 
     }, 10000);
-
 }
 
 
